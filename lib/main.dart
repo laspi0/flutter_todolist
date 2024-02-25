@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(TodoApp());
@@ -74,17 +75,29 @@ class _TodoListState extends State<TodoList> {
             child: ListView.builder(
               itemCount: _todos.length,
               itemBuilder: (context, index) {
-                return Card(
-                  margin: EdgeInsets.all(8.0),
-                  color: Colors.tealAccent, // Set card background color
-                  child: ListTile(
-                    title: Text(_todos[index].text),
-                    subtitle: Text(
-                      'Created on: ${_todos[index].date.toString()}',
+                final todo = _todos[index];
+                final formattedDate = DateFormat.yMMMd().add_Hms().format(todo.date);
+                return Dismissible(
+                  key: Key(todo.text),
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    _removeTodo(index);
+                  },
+                  child: Card(
+                    margin: EdgeInsets.all(8.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: Colors.teal),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () => _removeTodo(index),
+                    child: ListTile(
+                      title: Text(todo.text),
+                      subtitle: Text('Created on: $formattedDate'),
                     ),
                   ),
                 );
