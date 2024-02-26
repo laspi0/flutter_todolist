@@ -61,7 +61,7 @@ class _TodoListState extends State<TodoList> {
             child: TextField(
               controller: _textFieldController,
               decoration: InputDecoration(
-                hintText: "Enter your todo",
+                hintText: "Creer votre tache",
               ),
             ),
           ),
@@ -69,14 +69,15 @@ class _TodoListState extends State<TodoList> {
             onPressed: () {
               _addTodo();
             },
-            child: Text('Add'),
+            child: Text('Ajouter'),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: _todos.length,
               itemBuilder: (context, index) {
                 final todo = _todos[index];
-                final formattedDate = DateFormat.yMMMd().add_Hms().format(todo.date);
+                final formattedDate =
+                    DateFormat.yMMMd().add_Hms().format(todo.date);
                 return Dismissible(
                   key: Key(todo.text),
                   background: Container(
